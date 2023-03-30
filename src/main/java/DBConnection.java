@@ -1,5 +1,5 @@
-import java.sql.*;
 
+import java.sql.*;
 public class DBConnection<EmployeePayrollObj> {
     Connection con;
     PreparedStatement ps;
@@ -57,6 +57,7 @@ public class DBConnection<EmployeePayrollObj> {
                     +"  "+rs.getString(10)+"  "+rs.getString(11));
         }
     }
+
     public void FindMultipleValues() throws Exception{
         System.out.println("------------------------------------------------------");
         ps = con.prepareStatement("SELECT SUM(net_pay) FROM employee_payroll WHERE gender = 'M' GROUP BY gender");
@@ -110,28 +111,6 @@ public class DBConnection<EmployeePayrollObj> {
             System.out.println("Number of female employee: " + rs.getInt(1));
         }
         System.out.println("------------------------------------------------------");
-    }
 
-    public void addEmployee(String name, String gender, double basic, String date, String phone, String address) throws Exception {
-        double deduction = (basic * 0.2);
-        double taxablePay = basic - deduction;
-        double tax = (taxablePay * 0.1);
-        double netPay = (basic - tax);
-        Date date1 = new Date(0000-00-00);
-        ps = con.prepareStatement("INSERT INTO `payroll_service`.`employee_payroll` (`id`, `name`, `gender`, `basic_pay`, `deductions`, `taxable_pay`, `tax`, `net_pay`, `start`, `employee_phone`, `address`) VALUES ('5', 'tanuja', 'F', '400000', '30000', '20000', '1500', '450000', '2020-01-15', '93287299', 'India');");
-        ps.setInt(1,5);
-        ps.setString(2,name);
-        ps.setString(3,gender);
-        ps.setDouble(4,basic);
-        ps.setDouble(5,deduction);
-        ps.setDouble(6,taxablePay);
-        ps.setDouble(7,tax);
-        ps.setDouble(8,netPay);
-        ps.setDate(9,date1.valueOf(date));
-        ps.setString(10,phone);
-        ps.setString(11,address);
-        ps.executeUpdate();
-        System.out.println("Record updated........");
     }
 }
-
